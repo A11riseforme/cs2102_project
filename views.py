@@ -97,7 +97,7 @@ def render_admin_panel():
         username=current_user.username, isAdmin=1).first()
     if not user:
         return redirect("/student_panel")
-    return "<h1>Hello, {}!</h1>".format(current_user.username)
+    return render_template("admin_panel.html")
 
 
 @view.route("/student_panel", methods=["GET"])

@@ -14,7 +14,8 @@ DROP TABLE IF EXISTS Users CASCADE;
 
 CREATE TABLE Users (
   username     varchar(50) PRIMARY KEY,
-  password      varchar(256) NOT NULL
+  password     varchar(256) NOT NULL,
+  isAdmin       integer NOT NULL 
 );
 
 CREATE TABLE Admins (
