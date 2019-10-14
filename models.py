@@ -4,6 +4,7 @@ from __init__ import db
 class Users(db.Model):
     username = db.Column(db.String, primary_key=True)
     password = db.Column(db.String, nullable=False)
+    isAdmin = db.Column(db.Integer, nullable=False)
 
     def is_authenticated(self):
         return True

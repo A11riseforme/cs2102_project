@@ -40,7 +40,7 @@ def render_registration_page():
                 form.username.errors.append(
                     "{} is already in use.".format(username))
             else:
-                query = "INSERT INTO users(username, password) VALUES ('{}', '{}')"\
+                query = "INSERT INTO users(username, password, isAdmin) VALUES ('{}', '{}', 0)"\
                     .format(username, password)
                 db.session.execute(query)
                 db.session.commit()
@@ -55,10 +55,11 @@ def render_student_login_page():
         print("username entered:", form.username.data)
         print("password entered:", form.password.data)
     if form.validate_on_submit():
-        user = Users.query.filter_by(username=form.username.data).first()
+        user = Users.query.filter_by(
+            username=form.username.data, isAdmin=0).first()
         if user:
             records = Users.query.filter_by(
-                username=form.username.data, password=form.password.data).first()
+                username=form.username.data, password=form.password.data, isAdmin=0).first()
             if records:
                 login_user(user)
                 return redirect("/student_panel")
@@ -72,10 +73,11 @@ def render_admin_login_page():
         print("username entered:", form.username.data)
         print("password entered:", form.password.data)
     if form.validate_on_submit():
-        user = Users.query.filter_by(username=form.username.data).first()
+        user = Users.query.filter_by(
+            username=form.username.data, isAdmin=1).first()
         if user:
             records = Users.query.filter_by(
-                username=form.username.data, password=form.password.data).first()
+                username=form.username.data, password=form.password.data, isAdmin=1).first()
             if records:
                 login_user(user)
                 return redirect("/admin_panel")
@@ -85,4 +87,24 @@ def render_admin_login_page():
 @view.route("/privileged-page", methods=["GET"])
 @login_required
 def render_privileged_page():
+    return "<h1>Hello, {}!</h1>".format(current_user.username)
+
+
+@view.route("/admin_panel", methods=["GET"])
+@login_required
+def render_admin_panel():
+    user = Users.query.filter_by(
+        username=current_user.username, isAdmin=1).first()
+    if not user:
+        return redirect("/student_panel")
+    return "<h1>Hello, {}!</h1>".format(current_user.username)
+
+
+@view.route("/student_panel", methods=["GET"])
+@login_required
+def render_student_panel():
+    user = Users.query.filter_by(
+        username=current_user.username, isAdmin=0).first()
+    if not user:
+        return redirect("/admin_panel")
     return "<h1>Hello, {}!</h1>".format(current_user.username)
