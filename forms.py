@@ -10,19 +10,20 @@ def is_valid_name(form, field):
 
 def agrees_terms_and_conditions(form, field):
     if not field.data:
-        raise ValidationError('You must agree to the terms and conditions to sign up')
+        raise ValidationError(
+            'You must agree to the terms and conditions to sign up')
 
 
 class RegistrationForm(FlaskForm):
+    matricID = StringField(
+        label='matricID',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'matricID'}
+    )
     username = StringField(
         label='Name',
         validators=[InputRequired(), is_valid_name],
         render_kw={'placeholder': 'Name'}
-    )
-    preferred_name = StringField(
-        label='Preferred name',
-        validators=[is_valid_name],
-        render_kw={'placeholder': 'Preferred name'}
     )
     password = PasswordField(
         label='Password',

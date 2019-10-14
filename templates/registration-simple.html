@@ -13,6 +13,17 @@
         {{ form.hidden_tag() }}
 
         <div class="formField">
+            {{ form.matricID }}
+            {% if form.matricID.errors %}
+            <div class="errorMessage">
+                {% for error in form.matricID.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
             {{ form.username }}
             {% if form.username.errors %}
             <div class="errorMessage">

@@ -16,8 +16,7 @@ def load_user(username):
 
 @view.route("/", methods=["GET"])
 def render_dummy_page():
-    form = LoginForm()
-    return render_template("student_login.html", form=form)
+    return redirect("/login")
 
 
 @view.route("/registration", methods=["GET", "POST"])
@@ -26,17 +25,26 @@ def render_registration_page():
     if form.validate_on_submit():
         username = form.username.data
         password = form.password.data
-        query = "SELECT * FROM users WHERE username = '{}'".format(username)
-        exists_user = db.session.execute(query).fetchone()
-        if exists_user:
-            form.username.errors.append(
-                "{} is already in use.".format(username))
+        matricID = form.matricID.data
+        query = "SELECT * FROM studentInfo WHERE matricID = '{}'".format(
+            matricID)
+        exists_students = db.session.execute(query).fetchone()
+        if not exists_students:
+            form.matricID.errors.append(
+                "{} is not a valid matricID.".format(matricID))
         else:
-            query = "INSERT INTO users(username, password) VALUES ('{}', '{}')"\
-                .format(username, password)
-            db.session.execute(query)
-            db.session.commit()
-            return "You have successfully signed up!"
+            query = "SELECT * FROM users WHERE username = '{}'".format(
+                username)
+            exists_user = db.session.execute(query).fetchone()
+            if exists_user:
+                form.username.errors.append(
+                    "{} is already in use.".format(username))
+            else:
+                query = "INSERT INTO users(username, password) VALUES ('{}', '{}')"\
+                    .format(username, password)
+                db.session.execute(query)
+                db.session.commit()
+                return "<meta http-equiv=\"refresh\" content=\"5;url = /login\" />sign-up successful, you will be redirected to login page in five seconds!"
     return render_template("registration-simple.html", form=form)
 
 
