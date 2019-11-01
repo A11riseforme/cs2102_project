@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ModReg</title>
+
+    <link rel="stylesheet" href="static/css/style-simple.css">
+</head>
+
+<body>
+    <form class="resetForm">
+        {{ form.hidden_tag() }}
+
+        <div class="formField">
+            {{ form.matricID }}
+            {% if form.matricID.errors %}
+            <div class="errorMessage">
+                {% for error in form.matricID.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.authCode }}
+            {% if form.authCode.errors %}
+            <div class="errorMessage">
+                {% for error in form.authCode.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="formField">
+            {{ form.password }}
+            {% if form.password.errors %}
+            <div class="errorMessage">
+                {% for error in form.password.errors %}
+                <li>{{ error }}</li>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+
+        <button id="resetButton" formmethod="post">reset</button>
+    </form>
+    </body> </html>

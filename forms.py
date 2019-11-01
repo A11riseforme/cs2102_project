@@ -32,6 +32,24 @@ class RegistrationForm(FlaskForm):
     )
 
 
+class ResetForm(FlaskForm):
+    matricID = StringField(
+        label='matricID',
+        validators=[InputRequired()],
+        render_kw={'placeholder': 'matricID'}
+    )
+    authCode = StringField(
+        label='',
+        validators=[],
+        render_kw={'placeholder': 'authCode'}
+    )
+    password = PasswordField(
+        label='Password',
+        validators=[],
+        render_kw={'placeholder': 'Password'}
+    )
+
+
 class LoginForm(FlaskForm):
     username = StringField(
         label='Name',

@@ -13,10 +13,10 @@ app.register_blueprint(view)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://{username}:{password}@{host}:{port}/{database}'\
     .format(
         username='postgres',
-        password='password',
+        password='f43QtYJ7JNEFXtbZ',
         host='localhost',
         port=5432,
-        database='modreg'
+        database='postgres'
 )
 app.config['SECRET_KEY'] = 'cWNNnECxbA8aMra5'
 
@@ -28,6 +28,6 @@ login_manager.init_app(app)
 if __name__ == "__main__":
     app.run(
         debug=True,
-        host='localhost',
+        host='0.0.0.0',
         port=5000
     )

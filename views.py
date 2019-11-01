@@ -2,7 +2,7 @@ from flask import Blueprint, redirect, render_template
 from flask_login import current_user, login_required, login_user
 
 from __init__ import db, login_manager
-from forms import LoginForm, RegistrationForm
+from forms import LoginForm, RegistrationForm, ResetForm
 from models import Users
 
 view = Blueprint("view", __name__)
@@ -26,7 +26,7 @@ def render_registration_page():
         username = form.username.data
         password = form.password.data
         matricID = form.matricID.data
-        query = "SELECT * FROM studentInfo WHERE matricID = '{}'".format(
+        query = "SELECT * FROM studentsInfo WHERE matricID = '{}'".format(
             matricID)
         exists_students = db.session.execute(query).fetchone()
         if not exists_students:
@@ -46,6 +46,42 @@ def render_registration_page():
                 db.session.commit()
                 return "<meta http-equiv=\"refresh\" content=\"5;url = /login\" />sign-up successful, you will be redirected to login page in five seconds!"
     return render_template("registration-simple.html", form=form)
+
+
+@view.route("/reset", methods=["GET", "POST"])
+def render_reset_page():
+    form = ResetForm()
+    if form.validate_on_submit():
+        authCode = form.authCode.data
+        password = form.password.data
+        matricID = form.matricID.data
+        
+        query = "SELECT * FROM studentsInfo WHERE matricID = '{}'".format(
+            matricID)
+        exists_students = db.session.execute(query).fetchone()
+        if not exists_students:
+            form.matricID.errors.append(
+                "{} is not a valid matricID.".format(matricID))
+        else:
+            if not authCode:
+                query = "UPDATE students SET authCode = f_random_str(10) WHERE matricid = '{}'".format(matricID)
+                print(query)
+                db.session.execute(query)
+                db.session.commit()
+                form.authCode.errors.append("authCode has been sent to your email, please check.")
+            else:
+                query = "SELECT authcode FROM students WHERE matricID = '{}'".format(matricID)
+                correct_authCode = db.session.execute(query).fetchone()[0]
+                if authCode == correct_authCode:
+                    query = "UPDATE users SET password = '{}' WHERE username = (SELECT username FROM students WHERE matricID = '{}')". format(password, matricID)
+                    db.session.execute(query)
+                    query = "UPDATE students SET authCode = f_random_str(10) WHERE matricid = '{}'".format(matricID)
+                    db.session.execute(query)
+                    db.session.commit()
+                    return "<meta http-equiv=\"refresh\" content=\"5;url = /login\" />password-changing successful, you will be redirected to login page in five seconds!"
+                else:
+                    form.authCode.errors.append("authcode is invalid")
+    return render_template("reset.html", form=form)
 
 
 @view.route("/login", methods=["GET", "POST"])
