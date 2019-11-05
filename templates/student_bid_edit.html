@@ -1,0 +1,41 @@
+{% extends "student_base.html" %}
+{% block content %}
+{% if module_not_specified %}
+<h5> You have place following bids in the current round</h5>
+<table class="table" contenteditable="true" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Your Bid</th>
+            <th>Faculty</th>
+            <th>Faculty</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bid in current_bids %}
+        <tr>
+            <td>{{ bid[0] }}</td>
+            <td>{{ bid[1] }}</td>
+            <td>{{ bid[2] }}</td>
+            <td onclick="location.href='http://cs2102.oulove.me:5000/students_panel/bid/edit/{{bid[0]}}/{{bid[3]}}';">
+                <button type="button" class="btn btn-primary btn-sm">edit</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif module_specified %}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.bid_point.label }}<br>
+        {{ form.bid_point(size=32) }}<br>
+        {% if form.bid_point.errors %}
+        {% for error in form.bid_point.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ModReg Student Panel</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <base href="http://cs2102.oulove.me:8080/" />
+    <link href="static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="static/css/style.css" rel="stylesheet">
+
+
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                        <p>
+                            <a class="navbar-brand">Welcome, {{username}}</a>
+                        </p>
+                        <div class="btn-group">
+                            <a type="button" class="btn btn-primary" href="admin_panel">Main
+                                Page</a>
+                            <a type="button" class="btn btn-primary" href="admin_panel/bid_status" target="blank">Check
+                                Results</a>
+                            <a type="button" class="btn btn-primary" href="admin_panel/update_courses"
+                                target="blank">Update Courses</a>
+                            <a type="button" class="btn btn-primary" href="admin_panel/update_rounds"
+                                target="blank">Update Rounds</a>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                                    Profile
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="/admin_panel/profile/change_password">Change
+                                        Password</a>
+                                    <a class="dropdown-item" href="admin_panel/profile/logout">Logout</a>
+                                </div>
+                            </div>
+                        </div>
+                </nav>
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+
+    <script src="static/js/jquery.min.js"></script>
+    <script src="static/js/bootstrap.min.js"></script>
+    <script src="static/js/scripts.js"></script>
+</body>
+
+</html>

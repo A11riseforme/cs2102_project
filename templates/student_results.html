@@ -1,0 +1,26 @@
+{% extends "student_base.html" %}
+{% block content %}
+{% if error1 %}
+Round {{ roundid }} is still on going, please wait until it ends!
+{% elif error2 %}
+Round {{ roundid }} has not started yet!
+{% else %}
+<h5> You have successfully bid the following modules in round {{ roundid }}</h5>
+<table class="table" contenteditable="true">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Your Bid</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for module_got in modules_got %}
+        <tr>
+            <td>{{ module_got[0] }}</td>
+            <td>{{ module_got[1] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

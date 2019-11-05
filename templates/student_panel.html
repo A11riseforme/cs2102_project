@@ -1,0 +1,50 @@
+{% extends "student_base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h2>
+        Hello, {{username}}
+    </h2>
+    <p>
+        Now is Round {{round_no}}, you may bid {% if round_no == 1 or round_no == 2%}
+        lectures.
+        {% else %}
+        tutorials and labs
+        {% endif %}
+    </p>
+    <p>
+        {% if round_no == 1 or round_no ==2%}
+        <a class="btn btn-primary btn-large" href="student_panel/bid/lectures" target="blank">view
+            lectures
+            available</a>
+        {% else %}
+        <a class="btn btn-primary btn-large" href="student_panel/bid/tutorials_and_labs" target="blank">view
+            tutorials/labs
+            available</a>
+        {% endif %}
+    </p>
+</div>
+{% if current_bids %}
+<h5> You have placed following bids in the current round</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Your Bid</th>
+            <th>Faculty</th>
+            <th>Faculty</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bid in current_bids %}
+        <tr>
+            <td>{{ bid[0] }}</td>
+            <td>{{ bid[1] }}</td>
+            <td>{{ bid[2] }}</td>
+            <td onclick="window.open('http://cs2102.oulove.me:5000/student_panel/bid/edit/{{bid[0]}}/{{bid[3]}}');">
+                <button type="button" class="btn btn-primary btn-sm">edit</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}
