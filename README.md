@@ -55,6 +55,4 @@ You need to populate the data from the following sql files in order to test the 
 - admin_update_bidding_result.sql : update bidding results for admin after round 1
 - admin_update_balloting_result.sql : update balloting result for admin after round 2
 
-
-
-This project was rushed in a few days, for demonstration purpose only, don't read or learn from the coding style. ~~And I won't be responsible for the permanent brain damage caused.~~ 
+This project was collaborated by [A11riseforme](https://github.com/A11riseforme/), [HUANG XUAN KUN](https://github.com/HUANGXUANKUN), [tygq13](https://github.com/tygq13) and [WEI FENG](https://github.com/WEIFENG-NUSCEG), and was rushed in a few days, for demonstration purpose only, you are not recommended to read or learn from the coding style. ~~And I won't be responsible for the permanent brain damage caused.~~ 
