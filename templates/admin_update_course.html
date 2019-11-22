@@ -1,0 +1,34 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        {{ form.moduleId.label }}<br>
+        {{ form.moduleId(size=32) }}<br>
+        {% if form.moduleId.errors %}
+        {% for error in form.moduleId.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>
+        {{ form.fname.label }}<br>
+        {{ form.fname(size=32) }}<br>
+        {% if form.fname.errors %}
+        {% for error in form.fname.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>
+        {{ form.mc.label }}<br>
+        {{ form.mc(size=32) }}<br>
+        {% if form.mc.errors %}
+        {% for error in form.mc.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="container">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Round.No</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for each_round_data in all_round_data %}
+            <tr>
+                <td>{{each_round_data[0]}}</td>
+                <td>{{each_round_data[2]}}</td>
+                <td>{{each_round_data[3]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<div class="row justify-content-md-center">
+    <form action="" method="post" novalidate>
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.rid.label }}<br>
+            {{ form.rid(size=32) }}<br>
+            {% if form.rid.errors %}
+            {% for error in form.rid.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            {% endif %}
+        </p>
+        <p>
+            {{ form.startTime.label }}<br>
+            {{ form.startTime(size=32) }}<br>
+            {% if form.startTime.errors %}
+            {% for error in form.startTime.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            {% endif %}
+        </p>
+        <p>
+            {{ form.endTime.label }}<br>
+            {{ form.endTime(size=32) }}<br>
+            {% if form.endTime.errors %}
+            {% for error in form.endTime.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+            {% endif %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+</div>
+{% endblock %}

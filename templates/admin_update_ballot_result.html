@@ -1,0 +1,37 @@
+{% extends "admin_base.html" %}
+{% block content %}
+        <div class="col-md-6">
+            <div class="row">
+                <button type="button"
+                    onclick="location.href='http://127.0.0.1:5000/admin_panel/update_ballot_result/1';"
+                    class="btn btn-primary btn-sm">Generate Ballot Result</button>
+                <span style="color: red;">{{ confirmMessage }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h4>Ballot Result</h4>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>uname</th>
+                <th>module_code</th>
+                <th>rid</th>
+                <th>session</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in final_result %}
+            <tr>
+                <td>{{result[0]}}</td>
+                <td>{{result[1]}}</td>
+                <td>{{result[2]}}</td>
+                <td>{{result[3]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

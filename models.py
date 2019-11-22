@@ -2,9 +2,8 @@ from __init__ import db
 
 
 class Users(db.Model):
-    username = db.Column(db.String, primary_key=True)
+    uname = db.Column(db.String, primary_key=True)
     password = db.Column(db.String, nullable=False)
-    isAdmin = db.Column(db.Integer, nullable=False)
 
     def is_authenticated(self):
         return True
@@ -16,4 +15,38 @@ class Users(db.Model):
         return False
 
     def get_id(self):
-        return self.username
+        return self.uname
+
+
+class Student(db.Model):
+    uname = db.Column(db.String, primary_key=True)
+    matric_no = db.Column(db.String, nullable=False)
+    bid_point = db.Column(db.Integer, nullable=False)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.uname
+
+
+class Admin(db.Model):
+    uname = db.Column(db.String, primary_key=True)
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.uname

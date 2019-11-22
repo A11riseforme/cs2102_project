@@ -1,0 +1,81 @@
+{% extends "student_base.html" %}
+{% block content %}
+{% if balloted_tutorials %}
+<h5>You have balloted the following tutorials</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Timing</th>
+            <th>Quota</th>
+            <th>Rank</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tutorial in balloted_tutorials %}
+        <tr>
+            <td>{{ tutorial[0] }}</td>
+            <td>{{ tutorial[1] }}</td>
+            <td>{{ tutorial[2] }}</td>
+            <td>{{ tutorial[3] }}</td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/students_panel/ballot/del/{{tutorial[0]}}/{{tutorial[4]}}';">Drop</button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/students_panel/ballot/up/{{tutorial[0]}}/{{tutorial[4]}}';">Move
+                    Up</button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/students_panel/ballot/down/{{tutorial[0]}}/{{tutorial[4]}}';">Move
+                    Down</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% if available_tutorials %}
+<h5>You may ballot the following tutorials:</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Timing</th>
+            <th>Quota</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tutorial in available_tutorials %}
+        <tr>
+            <td>{{ tutorial[0] }}</td>
+            <td>{{ tutorial[1] }}</td>
+            <td>{{ tutorial[3] }}</td>
+            <td onclick="location.href='/students_panel/ballot/add/{{tutorial[0]}}/{{tutorial[2]}}';">
+                <button type="button" class="btn btn-primary btn-sm">Add</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif form and add%}
+<h5>Module:</h5>
+{{ module_info[0] }}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        <h5>Timing:</h5>
+        {{ module_info[1] }}
+        <h5>Quota:</h5>
+        {{ module_info[2] }}
+        <h5>{{ form.bid_point.label }}<br></h5>
+        {{ form.bid_point(size=32) }}<br>
+        {% if form.bid_point.errors %}
+        {% for error in form.bid_point.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,91 @@
+{% extends "student_base.html" %}
+{% block content %}
+{% if module_not_specified %}
+<h5> You have placed following bids in the current round <font color="red">{{current_round}}</font>
+</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Your Bid</th>
+            <th>Timing</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bid in current_bids %}
+        <tr>
+            <td>{{ bid[0] }}</td>
+            <td>{{ bid[3] }}</td>
+            <td>{{ bid[2] }}</td>
+            <td onclick="location.href='/students_panel/bid/edit/{{bid[0]}}/{{bid[1]}}';">
+                <button type="button" class="btn btn-primary btn-sm">edit</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif form and edit %}
+<h5>Module:</h5>
+{{ module_code }}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        <h5>Old Bid Point:</h5>
+        {{ bid_points }}
+        <h5>{{ form.bid_point.label }}<br></h5>
+        {{ form.bid_point(size=32) }}<br>
+        {% if form.bid_point.errors %}
+        {% for error in form.bid_point.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endif %}
+<br>
+{% if available_lectures %}
+<h5>You may bid the following lectures:</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Quota</th>
+            <th>Timing</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for lecture in available_lectures %}
+        <tr>
+            <td>{{ lecture[0] }}</td>
+            <td>{{ lecture[3] }}</td>
+            <td>{{ lecture[2] }}</td>
+            <td onclick="location.href='/students_panel/bid/add/{{lecture[0]}}/{{lecture[1]}}';">
+                <button type="button" class="btn btn-primary btn-sm">bid</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% elif form and add%}
+<h5>Module:</h5>
+{{ module_info[0] }}
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
+    <p>
+        <h5>Timing:</h5>
+        {{ module_info[1] }}
+        <h5>Quota:</h5>
+        {{ module_info[2] }}
+        <h5>{{ form.bid_point.label }}<br></h5>
+        {{ form.bid_point(size=32) }}<br>
+        {% if form.bid_point.errors %}
+        {% for error in form.bid_point.errors %}
+        <span style="color: red;">[{{ error }}]</span>
+        {% endfor %}
+        {% endif %}
+    </p>
+    <p>{{ form.submit() }}</p>
+</form>
+{% endif %}
+{% endblock %}

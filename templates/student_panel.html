@@ -1,0 +1,100 @@
+{% extends "student_base.html" %}
+{% block content %}
+<div class="jumbotron">
+    <h2>
+        Hello, {{username}}
+    </h2>
+    <p>
+        Now is Round {{current_round}},
+        {% if current_round == 0 %}
+        you need to wait for round 1 to start.
+        {% elif current_round == 1%}
+        you can bid lectures.
+        {% elif current_round == 1.5 %}
+        you need to wait for round 2 to start.
+        {% elif current_round == 2%}
+        you can bid lectures and view results in round 1.
+        {% elif current_round == 2.5 %}
+        you need to wait for round 3 to start.
+        {% elif current_round == 3 %}
+        you can bid tutorials and labs and view results in round 1 and 2.
+        {% endif %}
+    </p>
+    <p>
+        {% if current_round == 1 %}
+        <a class="btn btn-primary btn-large" href="students_panel/bid" target="blank">view
+            lectures
+            available</a>
+        {% elif current_round == 2 %}
+        <a class="btn btn-primary btn-large" href="students_panel/bid" target="blank">view lectures
+            available</a><br><br>
+        <a class="btn btn-primary btn-large" href="students_panel/results/1" target="blank">view results in round 1</a>
+        {% elif current_round == 3 %}
+        <a class="btn btn-primary btn-large" href="students_panel/ballot" target="blank">view tutorials/labs
+            available</a><br><br>
+        <a class="btn btn-primary btn-large" href="students_panel/results/1" target="blank">view results in round
+            1</a><br><br>
+        <a class="btn btn-primary btn-large" href="students_panel/results/2" target="blank">view results in round 2</a>
+        {% endif %}
+
+    </p>
+</div>
+{% if current_bids and (current_round == 1 or current_round == 2) %}
+<h5> You have placed following bids in the current round</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Your Bid</th>
+            <th>Timing</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bid in current_bids %}
+        <tr>
+            <td>{{ bid[0] }}</td>
+            <td>{{ bid[3] }}</td>
+            <td>{{ bid[2] }}</td>
+            <td onclick="window.open('/students_panel/bid/edit/{{bid[0]}}/{{bid[1]}}');">
+                <button type="button" class="btn btn-primary btn-sm">edit</button></td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% if balloted_tutorials and current_round == 3 %}
+<h5>You have balloted the following tutorials</h5>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>Module Code</th>
+            <th>Timing</th>
+            <th>Quota</th>
+            <th>Rank</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for tutorial in balloted_tutorials %}
+        <tr>
+            <td>{{ tutorial[0] }}</td>
+            <td>{{ tutorial[1] }}</td>
+            <td>{{ tutorial[2] }}</td>
+            <td>{{ tutorial[3] }}</td>
+            <td>
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/students_panel/ballot/del/{{tutorial[0]}}/{{tutorial[4]}}';">Drop</button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/students_panel/ballot/up/{{tutorial[0]}}/{{tutorial[4]}}';">Move
+                    Up</button>
+                <button type="button" class="btn btn-primary btn-sm"
+                    onclick="location.href='/students_panel/ballot/down/{{tutorial[0]}}/{{tutorial[4]}}';">Move
+                    Down</button>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

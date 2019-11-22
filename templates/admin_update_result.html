@@ -1,0 +1,103 @@
+{% extends "admin_base.html" %}
+{% block content %}
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col">
+            <h5>You can update a pending bid to successful bid</h5>
+            <h5>by submitting the form below</h5>
+            <form action="" method="post" novalidate>
+                {{ updateBidToSuccessfulForm.hidden_tag() }}
+                <p>
+                    {{ updateBidToSuccessfulForm.moduleId.label }}<br>
+                    {{ updateBidToSuccessfulForm.moduleId(size=32) }}<br>
+                    {% if updateBidToSuccessfulForm.moduleId.errors %}
+                    {% for error in updateBidToSuccessfulForm.moduleId.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    {% endif %}
+                </p>
+                <p>
+                    {{ updateBidToSuccessfulForm.rid.label }}<br>
+                    {{ updateBidToSuccessfulForm.rid(size=32) }}<br>
+                    {% if updateBidToSuccessfulForm.rid.errors %}
+                    {% for error in updateBidToSuccessfulForm.rid.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    {% endif %}
+                </p>
+                <p>
+                    {{ updateBidToSuccessfulForm.sessionNum.label }}<br>
+                    {{ updateBidToSuccessfulForm.sessionNum(size=32) }}<br>
+                    {% if updateBidToSuccessfulForm.sessionNum.errors %}
+                    {% for error in updateBidToSuccessfulForm.sessionNum.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    {% endif %}
+                </p>
+                <p>
+                    {{ updateBidToSuccessfulForm.uname.label }}<br>
+                    {{ updateBidToSuccessfulForm.uname(size=32) }}<br>
+                    {% if updateBidToSuccessfulForm.uname.errors %}
+                    {% for error in updateBidToSuccessfulForm.uname.errors %}
+                    <span style="color: red;">[{{ error }}]</span>
+                    {% endfor %}
+                    {% endif %}
+                </p>
+                <p>{{ updateBidToSuccessfulForm.submit() }}</p>
+            </form>
+        </div>
+
+        <div class="col">
+            <div class="row">
+                <h5>Before clicking the buttom below, please note that</h5>
+                <p>All the pending/failed bid will be deleted.</p>
+                <p>You can update a pending bid to successful bid by submitting the form at the left</p>
+                <p>Bid point of the deleted bid will be returned to respective student</p>
+                <button type="button"
+                    onclick="location.href='http://127.0.0.1:5000/admin_panel/update_result/1';"
+                    class="btn btn-primary btn-sm">Click to confirm update</button>
+                <span style="color: red;">{{ confirmMessage }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="container">
+    <h4>Successful/Pending Bid Result</h4>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>module_code</th>
+                <th>rid</th>
+                <th>session</th>
+                <th>uname</th>
+                <th>matric_no</th>
+                <th>cap</th>
+                <th>sfname</th>
+                <th>mfname</th>
+                <th>threshold</th>
+                <th>bid points</th>
+                <th>status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for result in bid_result %}
+            <tr>
+                <td>{{result[0]}}</td>
+                <td>{{result[1]}}</td>
+                <td>{{result[2]}}</td>
+                <td>{{result[3]}}</td>
+                <td>{{result[4]}}</td>
+                <td>{{result[5]}}</td>
+                <td>{{result[6]}}</td>
+                <td>{{result[7]}}</td>
+                <td>{{result[8]}}</td>
+                <td>{{result[9]}}</td>
+                <td>{{result[10]}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
