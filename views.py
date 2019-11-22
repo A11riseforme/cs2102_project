@@ -31,7 +31,7 @@ def get_current_round():
 def send_mail(email, authcode, matric_id):
     host_server = 'smtp.qq.com'
     sender_qq = '1075005528'
-    pwd = 'pyhdqnsbiisvibdd'
+    pwd = 'pyhdqnsbiisvibdd' # expired already, don't bother trying
     sender_qq_mail = '1075005528@qq.com'
     receiver = email
     mail_content = "please use the authcode %s and your matric_id %s to reset the password in the ShadowModreg" % (authcode, matric_id) 
